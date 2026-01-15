@@ -4,6 +4,11 @@
 // ============================================
 
 // Initialize when DOM is ready
+const featuredTrack = document.querySelector('.steel-pan');
+
+if (featuredTrack) {
+    // Add any additional JS functionality for the featured track if needed
+}
 document.addEventListener('DOMContentLoaded', function() {
     initSmoothScroll();
     initIntersectionObserver();
@@ -233,6 +238,36 @@ window.addEventListener('load', () => {
         }
     });
 });
+
+// ============================================
+// 3D WOW EFFECT FOR MAIN RELEASE CARD
+// ============================================
+
+const releaseCard = document.querySelector('.release-card');
+
+if (releaseCard) {
+    releaseCard.addEventListener('mousemove', (e) => {
+        if (matchMedia('(pointer: fine)').matches && matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+            const rect = releaseCard.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width;
+            const y = (e.clientY - rect.top) / rect.height;
+            const maxRotation = 7; // Max degrees for rotation
+            releaseCard.style.setProperty('--mx', `${x * 100}%`);
+            releaseCard.style.setProperty('--my', `${y * 100}%`);
+            releaseCard.style.setProperty('--rx', `${(y - 0.5) * maxRotation}deg`);
+            releaseCard.style.setProperty('--ry', `${(x - 0.5) * maxRotation}deg`);
+            releaseCard.style.transform = `perspective(900px) rotateX(${releaseCard.style.getPropertyValue('--rx')}) rotateY(${releaseCard.style.getPropertyValue('--ry')}) translateY(-6px)`;
+        }
+    });
+
+    releaseCard.addEventListener('mouseleave', () => {
+        releaseCard.style.setProperty('--mx', '50%');
+        releaseCard.style.setProperty('--my', '50%');
+        releaseCard.style.setProperty('--rx', '0deg');
+        releaseCard.style.setProperty('--ry', '0deg');
+        releaseCard.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0)';
+    });
+}
 
 // ============================================
 // CONSOLE LOG

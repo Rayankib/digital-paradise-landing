@@ -3,6 +3,51 @@
    Main Stylesheet (Polished)
    ============================================ */
 
+/* Styles for the featured track */
+.track-row.steel-pan {
+    position: relative;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    transition: box-shadow 180ms ease;
+}
+
+.track-row.steel-pan .badge {
+    display: inline-block;
+    background-color: rgba(128, 0, 128, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.track-row.steel-pan:hover {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+/* Purple stage light behind the release card */
+.release-card-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(128, 0, 128, 0.5), transparent 70%);
+    filter: blur(60px);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Button hover effects */
+.button {
+    transition: box-shadow 180ms ease;
+}
+
+.button:hover {
+    box-shadow: 0 0 10px rgba(128, 0, 128, 0.8);
+}
+
 /* Reset & Base Styles */
 * {
     margin: 0;
@@ -386,16 +431,53 @@ body::before {
         inset 0 0 50px rgba(1, 220, 160, 0.1);
     animation: slideInUp 0.8s ease 0.3s both;
     transition: all 0.4s ease;
+    transform-style: preserve-3d;
+}
+
+.release-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at var(--mx) var(--my), rgba(255, 255, 255, 0.5), transparent 55%);
+    opacity: 0.3;
+    transition: opacity 180ms ease;
+    pointer-events: none;
+}
+
+.release-card:hover::before {
+    opacity: 0.6;
+}
+
+.release-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    filter: blur(8px);
+    pointer-events: none;
 }
 
 .release-card:hover {
-    border-color: rgba(1, 220, 160, 0.8);
-    box-shadow: 
-        0 0 50px rgba(1, 220, 160, 0.35),
-        0 0 100px rgba(100, 50, 200, 0.2),
-        inset 0 0 50px rgba(1, 220, 160, 0.12),
-        0 10px 40px rgba(0, 0, 0, 0.4);
-    transform: translateY(-5px);
+    transform: translateY(-6px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.release-card:hover::before {
+    opacity: 0.6;
+}
+
+/* Accessibility: Disable tilt on touch devices */
+@media (hover: none) {
+    .release-card {
+        transform: none;
+    }
 }
 
 @keyframes slideInUp {
@@ -868,11 +950,6 @@ body::before {
         height: 32px;
         min-width: 70px;
         font-size: 0.7rem;
-    }
-
-    .track-label {
-        font-size: 0.65rem;
-        padding: 0.3rem 0.6rem;
     }
 
     .social-grid {
